@@ -12,6 +12,7 @@
 #include <QScrollArea>
 #include <QSpacerItem>
 #include <QSpinBox>
+#include <QStyle>
 #include <QVBoxLayout>
 
 #include "Common/CommonTypes.h"
@@ -488,7 +489,9 @@ void WiiTASInputWindow::UpdateControlVisibility()
   // surrounded by large amounts of empty space in one dimension.
   m_scroll_widget->layout()->activate();
   const QSize hint = m_scroll_widget->sizeHint();
-  resize(hint.width() + 15, hint.height() + 10);
+  const int scrollbar_width = style()->pixelMetric(QStyle::PM_ScrollBarExtent);
+  // Heigh increase prevents the scrollbar from rendering when there is enough space
+  resize(hint.width() + scrollbar_width, hint.height() + 20);
 }
 
 void WiiTASInputWindow::hideEvent(QHideEvent* const event)
