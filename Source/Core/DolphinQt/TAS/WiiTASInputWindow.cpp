@@ -491,7 +491,7 @@ void WiiTASInputWindow::UpdateControlVisibility()
   const QSize hint = m_scroll_widget->sizeHint();
   const int scrollbar_width = style()->pixelMetric(QStyle::PM_ScrollBarExtent);
   // Heigh increase prevents the scrollbar from rendering when there is enough space
-  resize(hint.width() + scrollbar_width, hint.height() + 20);
+  resize(hint.width() + scrollbar_width + 10, hint.height() + 20);
 }
 
 void WiiTASInputWindow::hideEvent(QHideEvent* const event)
