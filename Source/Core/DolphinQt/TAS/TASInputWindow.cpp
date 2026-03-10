@@ -154,7 +154,7 @@ QGridLayout* TASInputWindow::CreateSliderValuePairLayout(
       text, shortcut_key_sequence.toString(QKeySequence::NativeText)));
 
   QGridLayout* layout = new QGridLayout;
-  layout->addWidget(label, 0, 0, 3, 1);
+  layout->addWidget(label, 0, 0);
 
   CreateSliderValuePair(group_name, control_name, overrider, layout, zero, default_, min, max,
                         shortcut_key_sequence, Qt::Horizontal, shortcut_widget, scale);

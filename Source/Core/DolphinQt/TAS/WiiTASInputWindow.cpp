@@ -9,6 +9,7 @@
 #include <QGridLayout>
 #include <QGroupBox>
 #include <QHBoxLayout>
+#include <QScrollArea>
 #include <QSpacerItem>
 #include <QSpinBox>
 #include <QVBoxLayout>
@@ -339,7 +340,19 @@ WiiTASInputWindow::WiiTASInputWindow(QWidget* parent, int num) : TASInputWindow(
   layout->addWidget(m_classic_buttons_box);
   layout->addWidget(m_settings_box);
 
-  setLayout(layout);
+  m_scroll_widget = new QWidget;
+  m_scroll_widget->setLayout(layout);
+
+  auto* scroll_area = new QScrollArea;
+  scroll_area->setWidget(m_scroll_widget);
+  scroll_area->setWidgetResizable(true);
+  scroll_area->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+  scroll_area->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+
+  auto* outer_layout = new QVBoxLayout;
+  outer_layout->setContentsMargins(0, 0, 0, 0);
+  outer_layout->addWidget(scroll_area);
+  setLayout(outer_layout);
 }
 
 WiimoteEmu::Wiimote* WiiTASInputWindow::GetWiimote()
@@ -473,8 +486,9 @@ void WiiTASInputWindow::UpdateControlVisibility()
 
   // Without these calls, switching between attachments can result in the Stick/IRWidgets being
   // surrounded by large amounts of empty space in one dimension.
-  adjustSize();
-  resize(sizeHint());
+  m_scroll_widget->layout()->activate();
+  const QSize hint = m_scroll_widget->sizeHint();
+  resize(hint.width(), hint.height() + 10);
 }
 
 void WiiTASInputWindow::hideEvent(QHideEvent* const event)
