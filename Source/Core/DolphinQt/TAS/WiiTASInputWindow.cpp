@@ -488,7 +488,7 @@ void WiiTASInputWindow::UpdateControlVisibility()
   // surrounded by large amounts of empty space in one dimension.
   m_scroll_widget->layout()->activate();
   const QSize hint = m_scroll_widget->sizeHint();
-  resize(hint.width(), hint.height() + 10);
+  resize(hint.width() + 15, hint.height() + 10);
 }
 
 void WiiTASInputWindow::hideEvent(QHideEvent* const event)
