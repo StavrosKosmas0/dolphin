@@ -9,7 +9,6 @@
 #include <QGridLayout>
 #include <QGroupBox>
 #include <QHBoxLayout>
-#include <QScrollArea>
 #include <QSpacerItem>
 #include <QSpinBox>
 #include <QStyle>
@@ -341,19 +340,7 @@ WiiTASInputWindow::WiiTASInputWindow(QWidget* parent, int num) : TASInputWindow(
   layout->addWidget(m_classic_buttons_box);
   layout->addWidget(m_settings_box);
 
-  m_scroll_widget = new QWidget;
-  m_scroll_widget->setLayout(layout);
-
-  auto* scroll_area = new QScrollArea;
-  scroll_area->setWidget(m_scroll_widget);
-  scroll_area->setWidgetResizable(true);
-  scroll_area->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-  scroll_area->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-
-  auto* outer_layout = new QVBoxLayout;
-  outer_layout->setContentsMargins(0, 0, 0, 0);
-  outer_layout->addWidget(scroll_area);
-  setLayout(outer_layout);
+  SetupScrollArea(layout);
 }
 
 WiimoteEmu::Wiimote* WiiTASInputWindow::GetWiimote()
@@ -489,9 +476,8 @@ void WiiTASInputWindow::UpdateControlVisibility()
   // surrounded by large amounts of empty space in one dimension.
   m_scroll_widget->layout()->activate();
   const QSize hint = m_scroll_widget->sizeHint();
-  const int scrollbar_width = style()->pixelMetric(QStyle::PM_ScrollBarExtent);
-  // Heigh increase prevents the scrollbar from rendering when there is enough space
-  resize(hint.width() + scrollbar_width + 10, hint.height() + 20);
+  const int scrollbar_buffer = style()->pixelMetric(QStyle::PM_ScrollBarExtent) + 10;
+  resize(hint.width() + scrollbar_buffer, hint.height() + scrollbar_buffer);
 }
 
 void WiiTASInputWindow::hideEvent(QHideEvent* const event)

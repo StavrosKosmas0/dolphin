@@ -12,6 +12,7 @@
 #include <QGridLayout>
 #include <QGroupBox>
 #include <QLabel>
+#include <QScrollArea>
 #include <QShortcut>
 #include <QSlider>
 #include <QSpinBox>
@@ -234,6 +235,26 @@ TASSpinBox* TASInputWindow::CreateSliderValuePair(QGridLayout* layout, int defau
   }
 
   return value;
+}
+
+void TASInputWindow::SetupScrollArea(QLayout* layout)
+{
+  m_scroll_widget = new QWidget;
+  m_scroll_widget->setLayout(layout);
+
+  auto* scroll_area = new QScrollArea;
+  scroll_area->setWidget(m_scroll_widget);
+  scroll_area->setWidgetResizable(true);
+  scroll_area->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+  scroll_area->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+
+  auto* outer_layout = new QVBoxLayout;
+  outer_layout->setContentsMargins(0, 0, 0, 0);
+  outer_layout->addWidget(scroll_area);
+  setLayout(outer_layout);
+
+  layout->activate();
+  m_scroll_widget->layout()->activate();
 }
 
 std::optional<ControlState> TASInputWindow::GetButton(TASCheckBox* checkbox,

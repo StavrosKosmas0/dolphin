@@ -94,7 +94,6 @@ private:
   QGroupBox* m_nunchuk_buttons_box;
   QGroupBox* m_classic_buttons_box;
   QGroupBox* m_triggers_box;
-  QWidget* m_scroll_widget;
   AspectRatioWidget* m_ir_box;
   AspectRatioWidget* m_nunchuk_stick_box;
   AspectRatioWidget* m_classic_left_stick_box;

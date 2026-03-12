@@ -20,8 +20,10 @@ class QDialog;
 class QEvent;
 class QGridLayout;
 class QGroupBox;
+class QLayout;
 class QSpinBox;
 class QString;
+class QWidget;
 class TASCheckBox;
 class TASSpinBox;
 
@@ -69,8 +71,11 @@ protected:
                                     QKeySequence shortcut_key_sequence, Qt::Orientation orientation,
                                     QWidget* shortcut_widget);
 
+  void SetupScrollArea(QLayout* layout);
+
   void changeEvent(QEvent* event) override;
 
+  QWidget* m_scroll_widget;
   QGroupBox* m_settings_box;
   QCheckBox* m_use_controller;
   QSpinBox* m_turbo_press_frames;
